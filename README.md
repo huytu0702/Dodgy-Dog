@@ -1,3 +1,3 @@
 # Dodgy-Dog
-SDL2_bigProject_DodgyDog_2023
+Dodgy Dog game using SDL2 and SDL_image in C/C++
 
