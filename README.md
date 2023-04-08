@@ -7,12 +7,12 @@ Dodgy Dog is a fun and challenging game that tests players' reflexes and timing.
 # How to play game
 1. Press one of the allow keys to start game.
 2. The dog will automatically fall and you must use the allow keys to make the dog avoid hitting the land and the plane (move from the right to the left of the screen).
-- More
-If you hold the down button, you will make the dog fall slowly.\n
-If you press the down button, you will make the dog fall faster.
+  More
+- If you hold the down button, you will make the dog fall slowly.
+- If you press the down button, you will make the dog fall faster.
 3. You get one point if all planes move out the screen.
 4. The game ends when the dog hits a plane or land or moves out of the screen.
-Tips:
+  Tips:
 - Timing is crucial. Press the allow keys at the right moment to make the dog move and avoid the planes.
 - Avoid press buttons too much or too little, as this can cause the dog to fly too high or low and hit the planes or the ground.
 - Practice makes perfect. Keep playing to improve your score and beat your friends' high scores.
