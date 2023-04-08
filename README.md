@@ -1,3 +1,3 @@
 # Dodgy-Dog
-Dodgy Dog game using SDL2 and SDL_image in C/C++
+Dodgy Dog is a funny game where players navigate a dog to avoid planes by using buttons (up, right, left, down) to make the dog move. The game has a simplicity and addictive gameplay.
 
