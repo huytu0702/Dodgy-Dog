@@ -1,5 +1,7 @@
 # Dodgy Dog
-Dodgy Dog is a game developed by Tu Nguyen in 2023. The game using C++ and SDL2 used for the exam. The game is inspired Flappy bird by Dong Nguyen 
+Dodgy Dog is a game developed by Tu Nguyen in 2023. The game using C++ and SDL2 used for the exam. The game is inspired Flappy bird by Dong Nguyen
+
+<img src="https://imgur.com/a/pNrnSAn">
 # Game Description
 In Dodgy Dog, players control a dog and navigate it to avoid a series of planes. The dog fall automatically, and the player must use the array buttons to make the dog fly higher or move left or move right or move down and avoid the planes. All planes moving out of the screen earns the player one point. The game ends when the dog hits a plane or falls to the ground.
 # Game Function
