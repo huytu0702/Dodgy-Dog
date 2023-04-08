@@ -14,7 +14,7 @@ More:
 - If you hold the down button, you will make the dog fall slowly.
 - If you press the down button, you will make the dog fall faster.
 4. You get one point if all planes move out the screen.
-5. The game ends when the dog hits a plane or land or moves out of the screen.  
+5. The game ends when the dog hits a plane or ground or moves out of the screen.  
 
 Tips:
 - Timing is crucial. Press the allow keys at the right moment to make the dog move and avoid the planes.
