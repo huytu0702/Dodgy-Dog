@@ -5,9 +5,9 @@ In Dodgy Dog, players control a dog and navigate it to avoid a series of planes.
 
 
 ![Screenshot 2023-04-09 023004](https://user-images.githubusercontent.com/125453238/230739892-f101390f-22a5-4f4b-a05a-efa16a80b289.png)
-# Game Function
+## Game Function
 Dodgy Dog is a fun and challenging game that tests players' reflexes and timing. It is a great way to pass the time and compete with friends for the high score. The game's simplicity makes it easy to pick up, but difficult to master.
-# How to play game
+## How to play game
 1. Press one of the allow keys to start game.
 2. The dog will automatically fall and you must use the allow keys to make the dog avoid hitting the land and the plane (move from the right to the left of the screen).    
 More:
