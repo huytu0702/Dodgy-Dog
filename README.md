@@ -21,5 +21,5 @@ Tips:
 - Practice makes perfect. Keep playing to improve your score and beat your friends' high scores.
 ## License
 This game is for personal use only and may not be used for commercial purposes. The game must not be modified or reverse-engineered in any way. The game must not be distributed or shared without the owner's permission. Cheating or hacking in the game is prohibited. The owner is not responsible for any damage or loss caused by playing the game.
-##Contact
+## Contact
 22028126@vnu.edu.vn
