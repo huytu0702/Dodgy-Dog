@@ -8,6 +8,8 @@
 #include <string>
 #include <iostream>
 #include <random>
+#include <SDL_ttf.h>
+#include <string>
 
 static SDL_Window* window = NULL;
 static SDL_Renderer* screen = NULL;
@@ -16,7 +18,7 @@ static SDL_Event event;
 //Screen
 const int SCREEN_W = 350;
 const int SCREEN_H = 485;
-const int SCREEN_BPP = 32;
+//const int SCREEN_BPP = 32;
 
 #define groundOfMap 400
 #define bird_w 50

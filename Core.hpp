@@ -2,9 +2,7 @@
 
 #include <ComFunc.hpp>
 
-// texture = p_object_
-// rect = rect_
-//renderer = screen
+
 class Core
 {
 public:
