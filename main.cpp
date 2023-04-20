@@ -1,15 +1,19 @@
-#include <Core.hpp>
+﻿#include <Core.hpp>
 #include <ComFunc.hpp>
 #include <Bird.hpp>
 #include <Time.hpp>
 #include <Threat.hpp>
 #include <iostream>
-#include <GameFunc.hpp>
+#include <TextShow.hpp>
 
-Core Lbackground;
+Core Lbackground;	
 Core LLand;
+Core LGameOver;
 Bird bird;
 Threat threat[3];
+TTF_Font* font_text = NULL;
+TTF_Font* font_MENU = NULL;
+Mix_Chunk* sound = NULL;
 
 //Window
 bool Init()
@@ -39,7 +43,36 @@ bool Init()
 			if (!(IMG_Init(imgFlags)) && imgFlags)
 				success = false;
 		}
+
+		if (TTF_Init() == -1)
+		{
+			success = false;
+		}
+
+		font_text = TTF_OpenFont("font//ARCADE.ttf", 50);
+		if (font_text == NULL)
+		{
+			success = false;
+		}
+
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) == -1)
+		{
+			success = false;
+		}
+		else
+		{
+			sound = Mix_LoadWAV("sound//Dod.wav");
+		}
+
+
+		font_MENU = TTF_OpenFont("font//ARCADE.ttf", 80);
+		if (font_MENU == NULL)
+		{
+			return false;
+		}
 	}
+		
+	
 
 	return success;
 }
@@ -54,11 +87,20 @@ bool LoadBackground()
 //Load land
 bool loadLand()
 {
-	bool ret = LLand.LoadImage("image//land.png", screen);
+	bool ret = LLand.LoadImage("image//land - Copy.png", screen);
 	if (ret == false)
 		return false;
 	return true;
 }
+//load menu
+bool LoadGameOver()
+{
+	bool ret = LGameOver.LoadImage("image//gameover11.png", screen);
+	if (ret == false)
+		return false;
+	return true;
+}
+
 
 bool loadThreat()
 {
@@ -75,6 +117,7 @@ void close()
 	Lbackground.Free();
 	LLand.Free();
 	bird.Free();
+	LGameOver.Free();
 	threat->Free();
 
 	SDL_DestroyRenderer(screen);
@@ -83,12 +126,14 @@ void close()
 	SDL_DestroyWindow(window);
 	window = NULL;
 
+	
+
 	IMG_Quit();
 	SDL_Quit();
 }
 
 
-// Check for collision
+// Check collision
 bool checkCollision() {
 	if (bird.getXPOS() + bird_w > threat[0].getXPOS() && bird.getXPOS() < threat[0].getXPOS() + THREAT_WIDTH && bird.getYPOS() + bird_h > threat[0].getYPOS() && bird.getYPOS() < threat[0].getYPOS() + THREAT_HEIGHT
 		|| bird.getXPOS() + bird_w > threat[1].getXPOS() && bird.getXPOS() < threat[1].getXPOS() + THREAT_WIDTH && bird.getYPOS() + bird_h > threat[1].getYPOS() && bird.getYPOS() < threat[1].getYPOS() + THREAT_HEIGHT
@@ -102,20 +147,35 @@ int main(int argc, char* argv[])
 {
 	//land & background loop
 	int land_x = 0;
-	//int background_x = 0;
+	
 	//khoi tao
 	if (Init() == false)
 		return -1;
+
 	//Set fps
 	Time fps;
+
+	//Text
+	TextShow text_count_;
+	text_count_.SetColor(TextShow::WHITE_TEXT);
+	bool is_running = true;
+	
+
 	//load background va khoi tao vi tri
 	if (LoadBackground() == false)
 		return -1;
 	Lbackground.SetRect(0, -60);
+
 	//load land va khoi tao vi tri
 	if (loadLand() == false)
 		return -1;
 	LLand.SetRect(0, groundOfMap);
+
+	//Load gameover
+	if (LoadGameOver() == false)
+		return -1;
+	LGameOver.SetRect(0, 0);
+	
 /************************************Bird***************************************/
 	//load anh va khoi tao vi tri
 	bool ret = bird.LoadImg("image//shiba.png", screen);
@@ -132,14 +192,17 @@ int main(int argc, char* argv[])
 	threat[0].SetRect(SCREEN_W, 0);
 	threat[1].SetRect(SCREEN_W - 50, 50);
 	threat[2].SetRect(SCREEN_W + 55, 50);
+
+	//text
+	TextShow text_count;
+	text_count.SetColor(TextShow::WHITE_TEXT);
 	//Game
-	bool is_running = true;
+	bool endgame = false;
 	int up_level_count = 0; // bien tang do kho game
-	while (is_running)
+	Mix_PlayChannel(-1, sound, 0);
+	while (true)
 	{
-		
 		fps.start(); //set fps
-		
 		while (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_QUIT)
@@ -147,9 +210,11 @@ int main(int argc, char* argv[])
 				is_running = false;
 			}
 
+			
 			bird.Action(event, screen); // move
+			
 		}
-
+		
 		SDL_SetRenderDrawColor(screen, 0, 255, 0, 255);
 		SDL_RenderClear(screen);
 
@@ -157,14 +222,14 @@ int main(int argc, char* argv[])
 		if (bird.GetFalling() == true)
 		{
 			
-			std::cout << "You lose! Your score is: " << up_level_count << std::endl;
+			//std::cout << "You lose! Your score is: " << up_level_count << std::endl;
 				is_running = false;
 				up_level_count = 0;
 		} 
 	
 		if (bird.getXPOS() < 0 || bird.getYPOS() < 0 || bird.getXPOS() > SCREEN_W || bird.getYPOS() > SCREEN_W)
 		{
-			std::cout << "You lose! Your score is: " << up_level_count << std::endl;
+			//std::cout << "You lose! Your score is: " << up_level_count << std::endl;
 			is_running = false;
 			up_level_count = 0;
 		}
@@ -212,7 +277,7 @@ int main(int argc, char* argv[])
 		else
 		{
 			threat[0].MoveThreat();
-			threat[0].MoveThreatLvUp();
+			threat[1].MoveThreatLvUp();
 			threat[1].MoveThreat();
 			threat[2].MoveThreat();
 			threat[2].MoveThreat();
@@ -222,11 +287,11 @@ int main(int argc, char* argv[])
 
 		//Check va cham
 		if (checkCollision()) {
-			std::cout << "You lose! Your score is: " << up_level_count << std::endl;
+			//std::cout << "You lose! Your score is: " << up_level_count << std::endl;
 			is_running = false;
 			up_level_count = 0;
 		}
-
+		
 		//Show
 		bird.Show(screen);
 		if (up_level_count <= 5)
@@ -241,18 +306,37 @@ int main(int argc, char* argv[])
 			threat[2].Show(screen);
 
 		}
-		SDL_RenderPresent(screen);
 
-		//Set fps
-		int val1 = fps.get_ticks();
-		if (fps.get_ticks() < 1000 / FRAMES_PER_SECOND)
-		{
-			SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());
-		}
+		//Show game score
+		int count = up_level_count;
+		std::string count_str = std::to_string(count);
+		text_count.SetText(count_str);
+		text_count.LoadText(font_text, screen);
+		text_count.RenderText(screen, SCREEN_W * 0.49, 434);
 		
-	}
+		if (is_running == false) {
+			LGameOver.Render(screen, NULL);
+			Mix_FreeChunk(sound);
+			Mix_CloseAudio();
+		}
+	
+		
 	
 
+		SDL_RenderPresent(screen);
+		text_count.Free();
+		//Set fps, can bang thoi gian tat ca frame
+		int val1 = fps.get_ticks(); // real time
+		if (fps.get_ticks() < 1000 / FRAMES_PER_SECOND) // 1000 / frame... 1 lan chay mat ? ms
+		{
+			SDL_Delay((1000 / FRAMES_PER_SECOND) - fps.get_ticks());  // delay time 
+		}
+
+	}
+	
+	Mix_FreeChunk(sound);
+	Mix_CloseAudio();
+	
 	close();
 	return 0;
 }
