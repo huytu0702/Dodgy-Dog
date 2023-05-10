@@ -28,3 +28,4 @@ const int THREAT_HEIGHT = 50;
 const int THREAT_WIDTH = 38;
 const int THREAT_SPEED = 5;
 
+bool checkCollision(const SDL_Rect& object1,const SDL_Rect& object2);
